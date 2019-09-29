@@ -1,9 +1,12 @@
 <h1>All Articles</h1>
 
 <% @articles.each do |article| %>
-  <br /><%= article.created_at %> |
-  <%= article.updated_at %><br />
-  <h2><%= article.title %></h2>
+  <br /><%= article.created_at %> | <%= article.updated_at %> | <a href="/articles/<%= article.id %>">edit</a><br />
+  <h2>
+    <a href="/articles/<%= article.id %>">
+      <%= article.title %>
+    </a>
+  </h2>
   <%= article.content %><br />
   <hr />
 <% end %>
