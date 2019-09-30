@@ -7,18 +7,34 @@ class ArticlesController < ApplicationController
   def new
   end
 
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    
+    @article = Article.find(params[:id])    # запрос в БД записи для Article совпадающей по :id из маршрута
+ 
+    @article.update(                        # обновление @article
+      title: params[:article][:title],      # передача хэша с актуальными параметрами
+      content: params[:article][:content]
+    )
+    
+    redirect_to article_path                # перенаправление после обновления на /article/:id
+  end
+
   def show
     @article = Article.find(params[:id])
   end
 
-  def create
-    @article = Article.new params_article
-    @article.save
+  def create                                # создание новой записи: create и params_article 
+    @article = Article.new params_article   # создание в памяти, записи для Article (c разрешением)
+    @article.save                           # сохранение записи в БД
   end
 
-  private
+  private                                   # все что ниже не доступно из вне
 
-  def params_article
+  def params_article                        # метод для явного разрешения передачи параметров
     params.require(:article).permit(:title, :content)
   end
 
