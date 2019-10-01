@@ -1,4 +1,4 @@
-<h1>All Articles</h1>
+<h1>All Articles | <a href="/articles/new">add</a></h1>
 
 <% @articles.each do |article| %>
   <br /><%= article.created_at %> | <%= article.updated_at %> | <a href="/articles/<%= article.id %>/edit">edit</a><br />
