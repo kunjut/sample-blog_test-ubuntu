@@ -29,7 +29,12 @@ class ArticlesController < ApplicationController
 
   def create                                # создание новой записи: create и params_article 
     @article = Article.new params_article   # создание в памяти, записи для Article (c разрешением)
-    @article.save                           # сохранение записи в БД
+    
+    if @article.valid?                      # если валидация пройдена
+      @article.save                         # сохранение записи в БД
+    else                                    
+      render action: 'new'                  # иначе вывод экшена 'new' (его вида)
+    end                           
   end
 
   private                                   # все что ниже не доступно из вне

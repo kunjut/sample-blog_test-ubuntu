@@ -1,6 +1,17 @@
 <h1>Add new article</h1>
 
 <%= form_for :article, url: articles_path do |f| %>
+
+  <% if @article && @article.errors.any? %>
+    <p>
+    <% @article.errors.full_messages.each do |msg| %>
+      <ul>
+      <li><%= msg %></li>
+      </ul>
+    <% end %>
+    </p>
+  <% end %> 
+ 
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %><br />
