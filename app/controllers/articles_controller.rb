@@ -32,6 +32,7 @@ class ArticlesController < ApplicationController
     
     if @article.valid?                      # если валидация пройдена
       @article.save                         # сохранение записи в БД
+      redirect_to @article                  # редирект на '/articles' #show
     else                                    
       render action: 'new'                  # иначе вывод экшена 'new' (его вида)
     end                           
