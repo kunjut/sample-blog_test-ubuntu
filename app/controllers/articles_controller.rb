@@ -4,9 +4,6 @@ class ArticlesController < ApplicationController
     @articles = Article.order 'id DESC'
   end
 
-  def new
-  end
-
   def edit
     @article = Article.find(params[:id])
   end
@@ -25,6 +22,9 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+  end
+
+  def new
   end
 
   def create                                # создание новой записи: create и params_article 
