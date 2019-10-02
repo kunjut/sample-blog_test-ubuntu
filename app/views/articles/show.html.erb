@@ -2,6 +2,6 @@
 <%= @article.content %><hr/>
 
 <p>
-  <a href="/articles">back</a> | 
-  <a href="/articles/<%= @article.id %>/edit">edit</a> 
+  <%= link_to 'List', articles_path %> | 
+  <%= link_to 'Edit', edit_article_path %> 
 </p>
