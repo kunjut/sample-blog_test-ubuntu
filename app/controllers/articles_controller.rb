@@ -8,6 +8,12 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to @article 
+  end
+
   def edit
     @article = Article.find(params[:id])
   end
@@ -15,7 +21,7 @@ class ArticlesController < ApplicationController
   def update   
     @article = Article.find(params[:id])    # запрос в БД записи для Article совпадающей по :id из маршрута
  
-    if @article.update(params_article)      # обновление @article
+    if @article.update(params_article)      # если обновление @article удалось
       redirect_to @article                  # перенаправление после обновления на /article/:id
     else
       render action: 'edit'
