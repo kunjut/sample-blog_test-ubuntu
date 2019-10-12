@@ -1,13 +1,27 @@
-<h1>List of articles | <%= link_to '+', new_article_path %> </h1>
-
+<h1>List of articles 
+  <% if user_signed_in? %>
+    <small><%= link_to 'add new', new_article_path, class: "badge badge-pill badge-success" %></small>
+  <% end %>
+</h1>
+ 
 <% @articles.each do |article| %>
   <br />
-  <%= article.created_at %> | 
-  <%= article.updated_at %> | 
-  <%= link_to 'Edit', edit_article_path(article) %> |
-  <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'} %>
+  <i class="text-muted">
+    created at: <%= article.created_at.strftime("%e %B %Y, %H:%M") %> • 
+    updated at: <%= article.updated_at.strftime("%e %B %Y, %H:%M") %> 
+  </i>
+
+  <!--Проверка авторзации пользователя, чтобы разрешить edit/delete-->
+  <% if user_signed_in? %>
+    <span class="text-muted"> — </span>
+    <%= link_to 'Edit', edit_article_path(article), class: "badge badge-pill badge-secondary" %>
+    <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}, class: "badge badge-pill badge-danger" %>
+  <% end %>
+
   <br />
-  <h2><%= link_to article.title, article_path(article) %></h2>
-  <%= article.content %><br />
+
+  <h2 class="display-4"><%= link_to article.title, article_path(article) %></h2>
+  <p class="lead"><%= truncate(article.content, length: 400, omission: ' ... '){link_to "Read more", article_path(article)} %></p>
+  
   <hr />
 <% end %>

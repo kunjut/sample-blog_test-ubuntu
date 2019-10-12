@@ -1,39 +1,76 @@
-<h1><%= @article.title %></h1>
-<%= @article.content %><hr/>
-
+<!--Вывести заголовок статьи-->
 <p>
-  <%= link_to 'List', articles_path %> | 
-  <%= link_to 'Edit', edit_article_path %> 
+  <h1 class="display-4"><%= @article.title %></h1>
 </p>
 
+<p>
+<!--Вывести created_at и updated_at, с модификацией формата вывода-->
+  <i class="text-muted">
+    created at: <%= @article.created_at.strftime("%e %B %Y, %R") %> • 
+    updated at: <%= @article.updated_at.strftime("%e %B %Y, %R") %> 
+  </i>
+
+<!--Если пользователь вошел под логином/паролем дать возможность редактировать/удалять статью-->
+<!--Нужно закрепить каждую статью за своим пользователем, чтобы чужую нельзя было редактировать/удалять-->
+  <% if user_signed_in? %>
+    <span class="text-muted"> — </span>
+    <%= link_to 'Edit', edit_article_path(@article), class: "badge badge-pill badge-secondary" %>
+    <%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: 'Are you sure?'}, class: "badge badge-pill badge-danger" %>
+    <%= link_to 'Add new', new_article_path, class: "badge badge-pill badge-success" %>
+  <% end %>
+</p>
+
+<!--Вывести текст статьи-->
+<p class="lead">
+  <%= @article.content %>
+</p>
+
+<!--Вывести комменты к статье-->
 <% if @article.comments != [] %>
   <br /><h2>Комментарии</h2>
   <p>
     <% @article.comments.each do |comment| %>
       
-      <p>
-      <i>◊ <%= comment.author %> says:</i>
-      <%= comment.body %>
-      </p>
-      <i style="color: #aaaaaa">created at: <%= comment.created_at %></i>
-      <hr />
-    <% end %>
+      <div class="card">
+        <div class="card-header">
+          <i> <%= comment.author %> says:</i>
+        </div>
+
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p><%= comment.body %></p>
+          </blockquote>
+          <footer class="blockquote-footer">
+            <i>created at: <%= comment.created_at.strftime("%e %B %Y, %R") %></i>
+          </footer>
+        </div>
+      </div> <!--/.card--> <br />
+     <% end %>
   </p>
 <% end %>
 
+<!--Если пользователь авторизовался-->
+<% if user_signed_in?%>
+<!--Отдаем форму размещения коментов-->
 <br /><h2>Оставить комментарий</h2>
 <p>
   <%= form_for([@article, @article.comments.build]) do |f| %>
-    <!--p>
-      <%= f.label :author %><br />
-      <%= f.text_field :author %><br />
+    <!--Поле ввода имя автора не актуальна, теперь имя берется из username p>
+      <%= f.label :author %>
+      <%= f.text_field :author %>
     </p-->
+    <div class="form-group">
+      <!-- <%= f.label :body %> -->
+      <%= f.text_area :body, class: "form-control", placeholder: "Input your comment here"  %>
+    </div>
     <p>
-      <%= f.label :body %><br />
-      <%= f.text_area :body %><br />
-    </p>
-    <p>
-      <%= f.submit %>
+      <%= f.submit "Create comment", class: "btn btn-primary" %>
     </p>  
   <% end %>
 </p>
+<% else %><br />
+  <div class="alert alert-warning" role="alert">
+    To leave a comment <%= link_to 'Sign in', new_user_session_path, class: "alert-link" %>
+    or <%= link_to 'Sign up', new_user_registration_path, class: "alert-link"  %>
+  </div>
+<% end %>
