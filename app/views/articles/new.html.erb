@@ -3,24 +3,28 @@
 <%= form_for :article, url: articles_path do |f| %>
 
   <% if @article && @article.errors.any? %>
-    <p>
+    <div class="alert alert-warning" role="alert">
     <% @article.errors.full_messages.each do |msg| %>
       <ul>
       <li><%= msg %></li>
       </ul>
     <% end %>
-    </p>
+    </div>
   <% end %> 
  
-  <p>
+  <div class="form-group">
     <%= f.label :title %><br />
-    <%= f.text_field :title %><br />
-  </p>
-  <p>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :content %><br />
-    <%= f.text_area :content %><br />
-  </p>
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
   <p>
-    <%= f.submit %>
+    <%= f.submit "Save article", class: "btn btn-primary" %>
   </p>  
 <% end %>
+
+<p>
+ <%= link_to "Back", :back %> 
+</p>
