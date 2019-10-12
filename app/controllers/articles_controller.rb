@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   
-  before_action :authenticate_user!, :only => [:new, :create]
+  before_action :authenticate_user!, :only => [:new, :create] #почему только :new, :create? а :edit, :destroy почему нет?
 
   def index
     @articles = Article.order 'id DESC'
