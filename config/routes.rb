@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  root to: "home#index" # For devise
+  root to: "articles#index" # For devise
 
   get 'home/index'
   get '/terms', to: 'terms#show'
