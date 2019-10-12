@@ -1,19 +1,21 @@
-<h1>Edit article</h1>
+<h1>Edit article
+<small><%= link_to 'add new', new_article_path, class: "badge badge-pill badge-success" %></small>
+</h1>
 
 <%= form_for :article, url: article_path(@article), method: :put do |f| %>          
-  <p>                                    
+  <div class="form-group">                                    
     <%= f.label :title %><br />
-    <%= f.text_field :title %><br />
-  </p>
-  <p>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :content %><br />
-    <%= f.text_area :content %><br />
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>  
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Save article changes", class: "btn btn-primary" %>
+  </div>
 <% end %>
 
 <p>
-  <a href="/articles">back</a> 
+ <%= link_to "Back", :back %> 
 </p>
